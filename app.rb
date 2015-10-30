@@ -24,7 +24,7 @@ get '/sign-in' do
 	erb :sign-in
 end
 
-post '/sign=-in' do 
+post '/sign-in' do 
 	erb :sign-in
 end 
 

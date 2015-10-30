@@ -1,17 +1,16 @@
 require 'sinatra/activerecord/rake' 
 require './app.rb'
 
-create_table :users do |t|
-
-integer :User_id PK
-t.string :fname
-t.string :lname
-t.string :username
-t.string :password_id FK ??
-t.string :email
-datetime :join date
-t.string :country
-t.string :hobbies
+create_table :User do |t|
+	integer :user_id 
+	t.string :fname
+	t.string :lname
+	t.string :username
+	t.string :email
+	datetime :join_date
+	t.string :country
+	t.string :hobbies
+end
 
 create_table :Password do |t|
 integer :id PK
