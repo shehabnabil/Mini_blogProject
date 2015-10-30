@@ -21,19 +21,19 @@ get '/' do
 end 
 
 get '/sign-in' do 
-	erb :sign-in
+	erb :sign_in
 end
 
 post '/sign-in' do 
-	erb :sign-in
+	erb :sign_in
 end 
 
 get 'sign-up' do 
-	erb :sign-up 
+	erb :sign_up 
 end 
 
 post 'sign-up' do 
-	erb :sign-up 
+	erb :sign_up 
 end 
 
 get  '/users' do 
@@ -57,5 +57,5 @@ get '/followers' do
 end 
 
 get '/sign-out' do 
-	erb :sign-out
+	erb :sign_out
 end 
