@@ -24,8 +24,7 @@ get '/sign-in' do
 	erb :sign-in
 end
 
-post '/sign-in' do 
-	erb :sign-in
+
 end 
 
 get 'sign-up' do 
@@ -33,7 +32,7 @@ get 'sign-up' do
 end 
 
 post '/sign-in' do 
-	erb :sign-in
+	erb :sign-up
 end 
 
 get  '/users' do 
