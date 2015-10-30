@@ -11,6 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030184605) do
+ActiveRecord::Schema.define(version: 20151030201532) do
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followee_id"
+  end
+
+  create_table "password", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "password"
+  end
+
+  create_table "post", force: :cascade do |t|
+    t.string   "title"
+    t.string   "body"
+    t.integer  "user_id"
+    t.datetime "date_posted"
+    t.integer  "favorites"
+  end
+
+  create_table "profile", force: :cascade do |t|
+    t.string  "country"
+    t.string  "picture_path"
+    t.string  "post_picture_path"
+    t.integer "user_id"
+  end
+
+  create_table "user", force: :cascade do |t|
+    t.string   "fname"
+    t.string   "lname"
+    t.string   "username"
+    t.datetime "join_date"
+  end
 
 end
