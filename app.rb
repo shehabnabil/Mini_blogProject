@@ -45,8 +45,19 @@ get '/profile' do
 end 
 
 get '/blogpost' do 
+	@blogpost = Blogpost.find(params[:id])
 	erb :blogpost 
 end 
+
+put '/blogpost/:id' do 
+   @post = Blogpost.find(params[:id])
+   if @post.update_attributes(params[:blogpost])
+     redirect '/blogpost/#{@blogpost.id}'
+   else
+     slim :"blogpost/edit"
+   end
+
+
 
 get '/feed' do
 	erb :feed 

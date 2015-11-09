@@ -1,3 +1,36 @@
 <h1>Welcome to BleatHowl</h1>
 
-<a href="/users">users that add</a> 
+<p> Make a new blog entry</p>
+
+<form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+	<div class="row">
+		<label for="name">Your name:</label><br />
+		<input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+	</div>
+	<div class="row">
+		<label for="email">Your email:</label><br />
+		<input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+	</div>
+	<div class="row">
+		<label for="message">Your message:</label><br />
+		<textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br/>
+	</div>
+	<input id="submit_button" type="submit" value="Send email" />
+</form>		
+
+
+
+<h1> Edit Post</h1>
+  <form action="/posts/#{@post.id}" method="post">
+    <input type="hidden" name="_method" value="put">
+
+    <label for="post_title" :title>
+    <input id="post_title" name="post[title]" type="text" value="#{@post.title}">
+
+    <label for="post_body" :body>
+   <textarea id="post_body" name="post[body]" rows="5" #{@post.body}></textarea>
+    <input type="submit" value="Save">
+    </form> 
+
+
+<a href="/users">users</a> 
