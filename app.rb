@@ -70,8 +70,9 @@ post '/edit' do
 	erb :edit_profile
 end
 
-get './log_out' do
+get '/log-out' do
 	erb :log_out
+end
 
 
 
