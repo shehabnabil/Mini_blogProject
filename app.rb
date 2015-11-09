@@ -63,3 +63,9 @@ end
 get '/show' do
 	erb :show
 end
+get '/edit' do
+	erb :edit_profile
+end
+post '/edit' do
+	erb :edit_profile
+end
