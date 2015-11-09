@@ -59,3 +59,7 @@ end
 get '/sign-out' do 
 	erb :sign_out
 end 
+
+get '/show' do
+	erb :show
+end
