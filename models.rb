@@ -9,15 +9,15 @@ class User < ActiveRecord::Base
 end
 
 class Password < ActiveRecord::Base
-	has_one :user
+	belongs_to :user
 end
 
 class Profile < ActiveRecord::Base
-	has_one :user
+	belongs_to :user
 end
 
 class Post < ActiveRecord::Base
-	has_one :user
+	belongs_to :user
 end
 
 class Follow < ActiveRecord::Base
