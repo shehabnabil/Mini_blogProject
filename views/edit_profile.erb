@@ -1,30 +1,50 @@
-<h1>Edit Profile</h1>
-
-<hr>
 <h1>Edit-Profile</h1>
 
+<hr>
+<h1>Edit</h1>
+
 <form method="POST" action="/sign-in">
-<p>  
-<label for="username">Username</label> 
-<input type="text" name="username">  
-<label for="password">Password</label> 
-<input type="password" name="password">
-</p>
-<p>  
-<label for="fname">Fname</label> 
-<input type="text" name="Fname">
-<label for="lname">Lname</label> 
-<input type="text" name="lname">
-<label for="country">Country</label> 
-<input type="text" name="country">
-</p>
-<p>
-<label for="picture_path">Picture_path</label> 
-<input type="text" name="Picture_path">
-<label for="post_picture_path">Post_picture_path</label> 
-<input type="text" name="Post_picture_path">
-</p>
-<hr>          
-<input type="Submit">
+	<p>  
+		<label for="username">Username</label> 
+		<input type="text" name="username">  
+		<label for="password">Password</label> 
+		<input type="password" name="password">
+	</p>
+	<p>  
+		<label for="fname">Fname</label> 
+		<input type="text" name="Fname">
+		<label for="lname">Lname</label> 
+		<input type="text" name="lname">
+		<label for="country">Country</label> 
+		<input type="text" name="country">
+	</p>
+	<p>
+		<label for="picture_path">Picture_path</label> 
+		<input type="text" name="Picture_path">
+		<label for="post_picture_path">Post_picture_path</label> 
+		<input type="text" name="Post_picture_path">
+	</p>
+	<hr>          
+	<input type="Submit">
 </form>
 <hr>
+		
+		<% users = User.all %>
+<ul> 
+		<% users.each do |user| %>
+	<li><%= "#{user.fname}, #{user.lname}, #{user.username}"  %></li>
+		<% end %> 
+</ul>
+
+
+<img src="./images/jerry.jpg" width="50px">
+<img src="./images/T.jpg" width="50px">
+<img src="./images/tweetie.jpg" width="50px">
+<img src="./images/sylvester.jpg" width="50px"> 
+<img src="./images/Taz.jpg" width="200px"> 
+
+
+
+
+
+

@@ -69,3 +69,10 @@ end
 post '/edit' do
 	erb :edit_profile
 end
+
+get './log_out' do
+	erb :log_out
+
+
+
+
