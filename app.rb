@@ -20,14 +20,26 @@ get '/' do
 	erb :home 
 end 
 
+# display the sign-in form
+#
 get '/sign-in' do 
 	erb :sign_in
 end
 
+# verify a valid user has signed in
+#
 post '/sign-in' do 
 	# get info from login form and set session data
-	puts params
-	puts "-------------------------------------"
+	user = User.find_by_username(params[:username])
+	if user && user.password.password == params[:password]
+			session[:user_id] = user.id
+			redirect '/show'
+	else
+		# need to put in flash messages for failed login
+		#
+		puts "-------------  signin failed ------------------------"				
+		redirect 'sign-in'
+	end
 end 
 
 get '/sign-up' do 
