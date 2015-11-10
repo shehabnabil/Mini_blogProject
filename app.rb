@@ -25,7 +25,9 @@ get '/sign-in' do
 end
 
 post '/sign-in' do 
-	erb :sign_in
+	# get info from login form and set session data
+	puts params
+	puts "-------------------------------------"
 end 
 
 get '/sign-up' do 
@@ -33,7 +35,9 @@ get '/sign-up' do
 end 
 
 post '/sign-up' do 
-	erb :sign_up 
+	# get info from login form and set session data
+	puts params
+	puts "-------------------------------------"
 end 
 
 get  '/users' do 
@@ -56,7 +60,7 @@ put '/blogpost/:id' do
    else
      slim :"blogpost/edit"
    end
-
+end
 
 
 get '/feed' do
