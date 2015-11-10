@@ -62,7 +62,6 @@ put '/blogpost/:id' do
    end
 end
 
-
 get '/feed' do
 	erb :feed 
 end 
