@@ -3,6 +3,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './models.rb'
 require 'rack-flash'
+require 'pp.rb'
 
 enable :sessions
 use Rack::Flash, :sweep => true
@@ -37,7 +38,7 @@ post '/sign-in' do
 	else
 		# need to put in flash messages for failed login
 		#
-		puts "-------------  signin failed ------------------------"				
+		flash[:notice] = "Signin failed. Please try again"				
 		redirect 'sign-in'
 	end
 end 
@@ -48,8 +49,45 @@ end
 
 post '/sign-up' do 
 	# get info from login form and set session data
-	puts params
-	puts "-------------------------------------"
+	#
+	puts "params ---------------------------------"
+	pp params
+	fields = {
+		:fname => params[:fname],
+		:lname => params[:lname],
+		:username => params[:username],
+		:password => params[:password]
+	}
+	puts "fields ---------------------------------"
+	puts fields
+	user = User.create(	
+		fname:params[:fname],
+		lname:params[:lname],
+		username:params[:username]
+	)
+	if user
+		password = Password.create(user_id:user.id, 
+											password:params[:password])
+		if password
+			profile = Profile.create(
+				country:params[:country],
+				picture_path:params[:picture_path],
+				post_picture_path:params[:post_picture_path]
+			) 
+			if profile
+				redirect '/sign-in'
+			else
+				flash[:notice] = "Profile creation failed. Please fill in your profile information."
+				redirect '/edit'
+			end
+		else
+			flash[:notice] = "Password creation failed. Please try again."
+			redirect '/sign-up'
+		end
+	else 
+		flash[:notice] = "New Member creation failed. Please try again."
+		redirect '/sign-up'
+	end
 end 
 
 get  '/users' do 

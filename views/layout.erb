@@ -8,6 +8,12 @@
 	</head>
 	<body>
 		<%= yield %>
+
+		<div class="flash">
+			<%= flash[:notice] if flash[:notice] %> 
+			<%= flash[:alert] if flash[:alert] %>
+		</div>
+		
 		<p>
 		
 			<a href="/">Home</a>
