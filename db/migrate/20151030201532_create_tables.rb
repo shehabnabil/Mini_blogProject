@@ -16,7 +16,7 @@ class CreateTables < ActiveRecord::Migration
 
 		create_table :password do |t|
 			t.integer :user_id
-			t.integer :password
+			t.string :password
 		end
 
 		create_table :post do |t|
