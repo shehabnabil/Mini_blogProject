@@ -1,0 +1,84 @@
+body {
+	background-color: #99CCFF;
+	color: #006600;
+}
+head{
+	background-color: black;
+	color:black;
+}
+
+.flash {
+	color: red;
+	margin: auto;
+	width: 400px;
+}
+
+#header {
+	margin: auto;
+	width: 250px;
+}
+
+#header a {
+	font-size: 100px;
+}
+
+#content {
+	margin: auto;
+	width: 500px;
+}
+
+#linkGroup {
+	text-align: right;
+}
+
+.lnkGrp {
+	text-align: right;
+}
+
+.post {
+	margin-top: 80px;
+	background-color: black;
+	color: green;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	padding-left: 10px;
+}
+
+.comment {
+	background-color: white;
+	color: gray;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+}
+
+.profileMod {
+	text-align: right;
+}
+
+.profile {
+	border: 1px solid white;
+}
+
+a.profileLink {
+	font-size: 50px;	
+	text-decoration: none;
+}
+
+.byline {
+	display: inline;
+	float: right;
+}
+.posTitle {
+	display: inline;
+	float: left;
+}
+
+.loginFieldLabel {
+	display: inline;
+}
+.loginField {
+	display: inline;
+	width: 60%;
+	float: right;
+}

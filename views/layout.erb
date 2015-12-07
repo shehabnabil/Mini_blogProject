@@ -3,6 +3,7 @@
 	<head>
 	<!-- Bootstrap -->
 		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./CSS/style.css">
 		<title>
 			
 		</title>
@@ -42,9 +43,14 @@
 			          <div class="alert alert-error"><%=@error%></div>
 			      <% end %>
 		<%= yield %>
-			</div>
-			</div>
+
+		<div class="flash">
+			<%= flash[:notice] if flash[:notice] %> 
+			<%= flash[:alert] if flash[:alert] %>
+		</div>
+		
 		<p>
+		
 			<a href="/">Home</a>
 		</p>
 
