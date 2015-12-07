@@ -7,7 +7,7 @@ require 'rack-flash'
 enable :sessions
 use Rack::Flash, :sweep => true
 
-set :database, "sqlite3:groupDB.sqlite3"
+configure(:development){set :database, "sqlite3:groupDB.sqlite3"}
 
 def current_user 
 	if session[:user_id]
