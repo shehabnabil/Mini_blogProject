@@ -4,6 +4,5 @@ class RenameTables < ActiveRecord::Migration
 		rename_table :user, :users
 		rename_table :post, :posts
 		rename_table :profile, :profiles
-		rename_table :password, :passwords
 	end
 end
