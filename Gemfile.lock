@@ -47,6 +47,7 @@ DEPENDENCIES
   pg
   rack-flash3
   rake
+  sinatra
   sinatra-activerecord
   sqlite3
 
