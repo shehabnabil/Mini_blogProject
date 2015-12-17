@@ -12,8 +12,11 @@ set :database, "sqlite3:groupDB.sqlite3"
 
 def current_user 
 	if session[:user_id]
-		@current_user =User.find(session[:user_id])
+		@current_user = User.find(session[:user_id])
+	else
+		@current_user = nil
 	end 
+	puts "-------------- current user just changed to user with id #{session[:user_id]}"
 end 
 
 # views 
@@ -34,6 +37,7 @@ post '/sign-in' do
 	user = User.find_by_username(params[:username])
 	if user && user.password.password == params[:password]
 			session[:user_id] = user.id
+			current_user
 			redirect '/show'
 	else
 		# need to put in flash messages for failed login
@@ -43,23 +47,17 @@ post '/sign-in' do
 	end
 end 
 
+# generate user login form
+#
 get '/sign-up' do 
 	erb :sign_up 
 end 
 
+# generate user sign-up form
+#
 post '/sign-up' do 
 	# get info from login form and set session data
 	#
-	puts "params ---------------------------------"
-	pp params
-	fields = {
-		:fname => params[:fname],
-		:lname => params[:lname],
-		:username => params[:username],
-		:password => params[:password]
-	}
-	puts "fields ---------------------------------"
-	puts fields
 	user = User.create(	
 		fname:params[:fname],
 		lname:params[:lname],
@@ -125,6 +123,9 @@ get '/sign-out' do
 end 
 
 get '/show' do
+	puts "current user is----------------"
+	pp @current_user
+	puts "--------------------------------------"
 	erb :show
 end
 get '/edit' do
@@ -135,7 +136,10 @@ post '/edit' do
 end
 
 get '/log-out' do
-	erb :log_out
+	session[:user_id] = nil
+	current_user
+	flash[:notice] = "You have logged out."
+	redirect '/'
 end
 
 
