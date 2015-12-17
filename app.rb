@@ -19,6 +19,7 @@ def current_user
 		@current_user = nil
 	end 
 	puts "-------------- current user just changed to user with id #{session[:user_id]}"
+	return @current_user
 end 
 
 # views 
@@ -99,14 +100,14 @@ get '/profile' do
 end 
 
 get '/blogpost' do 
-	@blogpost = Blogpost.find(params[:id])
+	@blogpost = Post.find(params[:id])
 	erb :blogpost 
 end 
 
 put '/blogpost/:id' do 
-   @post = Blogpost.find(params[:id])
+   @post = Post.find(params[:id])
    if @post.update_attributes(params[:blogpost])
-     redirect '/blogpost/#{@blogpost.id}'
+     redirect '/blogpost/#{@post.id}'
    else
      slim :"blogpost/edit"
    end
@@ -121,13 +122,13 @@ get '/followers' do
 end 
 
 get '/sign-out' do 
-	erb :sign_out
+	session[:user_id] = nil
+	current_user
+	flash[:notice] = "You have logged out."
+	redirect '/'
 end 
 
 get '/show' do
-	puts "current user is----------------"
-	pp @current_user
-	puts "--------------------------------------"
 	erb :show
 end
 get '/edit' do
@@ -137,12 +138,6 @@ post '/edit' do
 	erb :edit_profile
 end
 
-get '/log-out' do
-	session[:user_id] = nil
-	current_user
-	flash[:notice] = "You have logged out."
-	redirect '/'
-end
 
 
 
