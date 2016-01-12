@@ -15,7 +15,7 @@ Profile.create(user_id: 2, country: "Canada")
 Profile.create(user_id: 3, country: "Japan")
 Profile.create(user_id: 4, country: "USA")
 
-Post.create(user_id: 2, title: "y kant Tori read?", body: "*snicker", favorites: 3)
+Post.create(user_id: 2, title: "y kant Tori read?", body: "*snicker*", favorites: 3)
 Post.create(user_id: 1, title: "Isn't It Ironic", body: "...that nothing in the song is actually ironic?", favorites: 3)
 Post.create(user_id: 1, title: "Album is dropping", body: "Don't worry, all of my lyrics still don't rhyme.")
 Post.create(user_id: 2, title: "Album is dropping", body: "Don't worry, all of my lyrics still don't rhyme. Like someone else's who blogs here.")
