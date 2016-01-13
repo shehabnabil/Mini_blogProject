@@ -6,6 +6,9 @@ head{
 	background-color: black;
 	color:black;
 }
+.navbar-height-override {
+	height: 135px;
+}
 
 .flash {
 	color: red;

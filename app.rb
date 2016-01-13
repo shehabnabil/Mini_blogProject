@@ -4,6 +4,7 @@ require 'sinatra/activerecord'
 require './models.rb'
 require 'rack-flash'
 require 'pp.rb'
+require 'pry'
 
 enable :sessions
 use Rack::Flash, :sweep => true
@@ -18,7 +19,7 @@ def current_user
 	else
 		@current_user = nil
 	end 
-	puts "-------------- current user just changed to user with id #{session[:user_id]}"
+
 	return @current_user
 end 
 
@@ -41,7 +42,7 @@ post '/sign-in' do
 	if user && user.password.password == params[:password]
 			session[:user_id] = user.id
 			current_user
-			redirect '/show'
+			redirect "/show?u=#{user.id}"
 	else
 		# need to put in flash messages for failed login
 		#
@@ -91,9 +92,56 @@ post '/sign-up' do
 	end
 end 
 
+#
+#  Display all users in the system with a link to their page
+#
 get  '/users' do 
+	@users = User.all
 	erb :users
 end 
+
+#
+#  Display a specific user's posts
+#
+get '/show' do
+	@show_user = User.find(params[:u].to_i)
+	@posts = Post.where(:user_id => @show_user)
+
+	# check and set if show_user is currently following current_user
+	@following = Follow.where(:follower_id => current_user, :followee_id => @show_user)
+
+	erb :show
+end
+#
+#  set up following from the show user page
+#
+get '/show_follow' do
+	@show_user = User.find(params[:ee].to_i)
+	#
+	# check that follower is not already following
+	#
+	following = Follow.create(:follower_id => current_user.id, :followee_id => @show_user.id)
+	if !following
+		flash[:alert] = "Sorry, you cannot follow #{@show_user.username} at this time."
+	end
+	redirect back
+end
+#
+#  set up UNfollowing from the show user page
+#
+get '/show_unfollow' do
+	@show_user = User.find(params[:ee].to_i)
+	#
+	# check that follower is not already following
+	#
+	following = Follow.where(:follower => current_user.id, :followee => @show_user.id)
+	if following.length > 0
+		following[0].destroy
+	else
+		flash[:alert] = "Sorry, you cannot unfollow #{@show_user.username} at this time."
+	end
+	redirect back
+end
 
 get '/profile' do 
 	erb :profile 
@@ -128,9 +176,7 @@ get '/sign-out' do
 	redirect '/'
 end 
 
-get '/show' do
-	erb :show
-end
+
 get '/edit' do
 	erb :edit_profile
 end

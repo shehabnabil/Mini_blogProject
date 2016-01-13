@@ -1,5 +1,17 @@
-<h1>User page: Show posts, possibly following if logged in</h1>
+<h1> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h1>
 
-<% if user = current_user %>
-	<h1> <%= "#{user.fname} #{user.lname}" %> </h1>
+<!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
+<% if @show_user.id != current_user.id %>
+	<% if @following.length == 0 %>
+		<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+	<% else %>
+		<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+	<% end %>
+<% end %>
+
+<!-- display blogger's posts -->
+<% @posts.each do |post| %>
+	<h1> <%= post.title %> </h1>
+	<p> <%= post.body %> </p>
+	<hr>
 <% end %>
