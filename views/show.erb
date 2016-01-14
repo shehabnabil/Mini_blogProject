@@ -1,17 +1,31 @@
 <h1> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h1>
 
 <!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
-<% if @show_user.id != current_user.id %>
-	<% if @following.length == 0 %>
-		<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+<% if current_user %>
+	<% if @show_user.id != current_user.id %>
+		<% if @following.length == 0 %>
+			<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+		<% else %>
+			<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+		<% end %>
 	<% else %>
-		<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+		<!-- If we are here, current user is looking at their own page. -->
+		<!-- So create a 'New Post' btn -->
+		<p><a class="btn btn-default" href="/blogpost_new">New Post</a> </p>	
+		<hr>
 	<% end %>
 <% end %>
 
 <!-- display blogger's posts -->
 <% @posts.each do |post| %>
-	<h1> <%= post.title %> </h1>
+	<h1> <a href=<%="/blogpost_show?p=#{post.id}"%>> <%= post.title %></a></h1>
 	<p> <%= post.body %> </p>
+	<% if current_user %>
+		<% if @show_user.id == current_user.id %>
+			<!-- If we are here, current user is looking at their own page. -->
+			<!-- So allow them to edit their post -->
+			<p><a class="btn btn-default" href=<%="/blogpost_edit?p=#{post.id}"%>>Edit Post</a> </p>				
+		<% end %>
+	<% end %>	
 	<hr>
 <% end %>

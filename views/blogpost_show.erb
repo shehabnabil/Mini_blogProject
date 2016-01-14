@@ -1,0 +1,19 @@
+
+
+	<h1> <%= @post.title %> </h1>
+	<p> <%= @post.body %> </p>
+	<% if current_user %>
+		<% if @show_user.id == current_user.id %>
+			<!-- If we are here, current user is looking at their own post. -->
+			<!-- So give them the option to edit their post -->
+			<p><a class="btn btn-default" href=<%="/blogpost_edit?p=#{@post.id}"%>>Edit Post</a> </p>			
+		<% else %>
+			<!-- If we are here, current user is looking at another's post. -->
+			<!-- So give them the option to folow that user -->
+			<% if @following.length == 0 %>
+				<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+			<% else %>
+				<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+			<% end %>
+		<% end %>
+	<% end %>	
