@@ -34,7 +34,9 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<% if current_user %>
-							<li class="active"><a href=<%"/show?u=#{current_user.id}"%>><%= current_user.username %><span class="sr-only">(current)</span></a></li>
+
+							<li class="active"><a href='<%="/show?u=#{current_user.id}"%>'><%="#{current_user.username}"%></a></li>
+							<li><a href="/profile_edit">Update Profile</a></li>
 						<% else %>
 						<% end %>
 						<li><a href="/users">All Users<span class="sr-only">(current)</span></a></li>
@@ -42,7 +44,6 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User-Area <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user %>
-									<li><a href="/blogpost">Blogpost</a></li>
 									<li><a href="/feed">Feed</a></li>
 									<li><a href="/edit">Edit</a></li>
 									<li role="separator" class="divider"></li>
