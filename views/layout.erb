@@ -33,8 +33,11 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-						<li><a href="#">Link</a></li>
+						<% if current_user %>
+							<li class="active"><a href=<%"/show?u=#{current_user.id}"%>><%= current_user.username %><span class="sr-only">(current)</span></a></li>
+						<% else %>
+						<% end %>
+						<li><a href="/users">All Users<span class="sr-only">(current)</span></a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User-Area <span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -42,9 +45,9 @@
 									<li><a href="/blogpost">Blogpost</a></li>
 									<li><a href="/feed">Feed</a></li>
 									<li><a href="/edit">Edit</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="/blogpost_new">Post Something!</a></li>
 								<% end %>
-								<li role="separator" class="divider"></li>
-								<li><a href="#">Separated link</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a href="#">One more separated link</a></li>
 							</ul>
@@ -64,6 +67,7 @@
 								
 								<% if current_user %>
 									<li><a href="/sign-out">Sign-out</a></li>
+									<li><a href="/blogpost_new">New Post</a></li>
 								<% else %>
 									<li><a href="/sign-in">Sign-In</a></li>
 									<li role="separator" class="divider"></li>
@@ -77,20 +81,22 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
-		<%if @error then %>
-			<div class="alert alert-error"><%=@error%></div>
-		<% end %>
+		<div class="container">
+			<%if @error then %>
+				<div class="alert alert-error"><%=@error%></div>
+			<% end %>
 
-		<%= yield %>
+			<div class="flash">
+				<%= flash[:notice] if flash[:notice] %> 
+				<%= flash[:alert] if flash[:alert] %>
+			</div>
 
-		<div class="flash">
-			<%= flash[:notice] if flash[:notice] %> 
-			<%= flash[:alert] if flash[:alert] %>
+			<%= yield %>
+
+			<p>		
+				<a href="/">Home</a>
+			</p>
 		</div>
-		
-		<p>		
-			<a href="/">Home</a>
-		</p>
 
 	</body>
 </html>

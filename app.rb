@@ -108,8 +108,10 @@ get '/show' do
 	@posts = Post.where(:user_id => @show_user)
 
 	# check and set if show_user is currently following current_user
-	@following = Follow.where(:follower_id => current_user, :followee_id => @show_user)
-
+	@following = []
+	if current_user
+		@following = Follow.where(:follower_id => current_user, :followee_id => @show_user)
+	end
 	erb :show
 end
 #
@@ -142,24 +144,58 @@ get '/show_unfollow' do
 	end
 	redirect back
 end
-
-get '/profile' do 
-	erb :profile 
+#
+#  show, edit, and create individual posts
+#
+get '/blogpost_show' do 
+	@post = Post.find(params[:p])
+	@show_user = User.find(@post.user_id)
+	puts "-----------------------------"
+	puts @post.user
+	puts "-----------------------------"
+	# check and set if show_user is currently following current_user
+	@following = []
+	if current_user
+		@following = Follow.where(:follower_id => current_user, :followee_id => @show_user)
+	end
+	erb :blogpost_show
 end 
 
-get '/blogpost' do 
-	@blogpost = Post.find(params[:id])
-	erb :blogpost 
+get '/blogpost_edit' do 
+	@post = Post.find(params[:p])
+	erb :blogpost_edit
 end 
 
-put '/blogpost/:id' do 
-   @post = Post.find(params[:id])
-   if @post.update_attributes(params[:blogpost])
-     redirect '/blogpost/#{@post.id}'
+post '/blogpost_edit' do 
+  blogpost = Post.find(params[:p])
+   if blogpost.update_attributes(title: params[:title], body: params[:body])
+		redirect "/show?u=#{current_user.id}"
    else
-     slim :"blogpost/edit"
+		flash[:alert] = "Sorry, post edit failed. Please try again."
+		redirect "/show?u=#{current_user.id}"
    end
 end
+
+get '/blogpost_new' do 
+	erb :blogpost_new
+end 
+
+post '/blogpost_new' do 
+
+	post = Post.create(
+		:user_id => current_user.id, 
+		:title => params[:title], 
+		:body => params[:body], 
+		:date_posted => DateTime.now
+	)
+
+	if post
+		redirect "/show?u=#{current_user.id}"
+	else
+		flash[:alert] = "Sorry, new post failed. Please try again."
+		redirect "/show?u=#{current_user.id}"
+	end
+end 
 
 get '/feed' do
 	erb :feed 
@@ -175,8 +211,12 @@ get '/sign-out' do
 	flash[:notice] = "You have logged out."
 	redirect '/'
 end 
-
-
+#
+#  show and edit profiles
+#
+get '/profile' do 
+	erb :profile 
+end 
 get '/edit' do
 	erb :edit_profile
 end
