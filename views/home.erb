@@ -10,15 +10,14 @@
 	<li><a href="/sign-in">Sign In!</a></li>
 </ul>
 
-<% posts = Post.all %>
-<% posts.each do |post| %>
-<p>
-	<a href='/blogpost'><%="#{post.title}"%> </a> 
-	 <a href="/profile"><%="#{post.user.username}"%></a>
-</p><p>
-<%= post.body %>
-</p>
-<hr>
+<% @posts.each do |post| %>
+	<p>
+		<a href='/blogpost'><%="#{post.title}"%> </a> 
+		<p>posted by <a href="/profile"><%="#{post.user.username}"%></a><%= " on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
+	</p><p>
+		<%= post.body %>
+	</p>
+	<hr>
 <% end %>
 
 <a href="/users">users</a>

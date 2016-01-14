@@ -25,6 +25,8 @@ end
 
 # views 
 get '/' do 
+	@posts = Post.all 
+
 	erb :home 
 end 
 
@@ -95,7 +97,7 @@ end
 #
 #  Display all users in the system with a link to their page
 #
-get  '/users' do 
+get '/users' do 
 	@users = User.all
 	erb :users
 end 
@@ -105,13 +107,39 @@ end
 #
 get '/show' do
 	@show_user = User.find(params[:u].to_i)
-	@posts = Post.where(:user_id => @show_user)
 
-	# check and set if show_user is currently following current_user
+	post_users = [@show_user.id]
+
+	# if current_user is viewing their own page, their feed will
+	# be a mix of their own and their followee's posts
 	@following = []
 	if current_user
-		@following = Follow.where(:follower_id => current_user, :followee_id => @show_user)
+		@following = Follow.where(:follower_id => @show_user.id)
+		if @following.length > 0
+			# add followed posts to the list of posts to show
+			@following.each do |follows|
+				# unsorted_posts.append Post.where(user_id: follows.followee_id)
+				post_users << follows.followee_id
+			end
+		end
 	end
+
+	# get all posts from show_user and followees
+	#
+	all_posts = Post.where(:user_id => post_users)
+
+	# limit the number of show_user's displayed to ten
+	i = 0
+	j = 0
+	@posts = []
+	while i < 10 && j < all_posts.length do
+	   @posts << all_posts[i]
+		if all_posts[i].user_id == @show_user.id
+		   i += 1 
+		end
+	   j += 1
+	end
+
 	erb :show
 end
 #
@@ -150,9 +178,7 @@ end
 get '/blogpost_show' do 
 	@post = Post.find(params[:p])
 	@show_user = User.find(@post.user_id)
-	puts "-----------------------------"
-	puts @post.user
-	puts "-----------------------------"
+
 	# check and set if show_user is currently following current_user
 	@following = []
 	if current_user
@@ -215,13 +241,62 @@ end
 #  show and edit profiles
 #
 get '/profile' do 
+	@profile = nil
+	if current_user
+		if current_user.profile
+			@profile = current_user.profile
+		end
+	end
+
 	erb :profile 
 end 
-get '/edit' do
-	erb :edit_profile
+
+get '/profile_edit' do
+	@profile = nil
+	if current_user
+		if current_user.profile
+			@profile = current_user.profile
+		else
+			@profile = Profile.new(
+				user_id: current_user.id,
+				picture_path: './images/user.png',
+				post_picture_path: './images/user.png'			
+			)
+		end
+	else
+		@profile = Profile.new(
+			user_id: current_user.id,
+			picture_path: './images/user.png',
+			post_picture_path: './images/user.png'			
+		)
+	end
+
+	erb :profile_edit
 end
-post '/edit' do
-	erb :edit_profile
+
+post '/profile_edit' do
+	profile = Profile.where(:user_id => current_user.id)
+	if profile.length > 0
+		if profile[0].update_attributes(
+				country: params[:country],
+				picture_path: params[:picture_path],
+				post_picture_path: params[:post_picture_path]
+			)
+			flash[:notice] = "Profile updated."	
+			redirect '/profile'
+		else
+			flash[:notice] = "Profile update failed. Please try again"	
+			redirect '/profile_edit'
+		end
+	else
+		profile.new(
+			user_id: current_user.id,
+			country: params[:country],
+			picture_path: params[:picture_path],
+			post_picture_path: params[:post_picture_path]
+		)
+	end
+	erb :profile
 end
 
 

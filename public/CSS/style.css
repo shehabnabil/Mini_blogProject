@@ -9,6 +9,20 @@ head{
 .navbar-height-override {
 	height: 135px;
 }
+.profile-li {
+	list-style-type: none;
+}
+.profile-li a {
+	color: gray;
+}
+.profile-li a:hover {
+	color: white;
+}
+
+
+
+
+
 
 .flash {
 	color: red;

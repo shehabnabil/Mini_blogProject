@@ -3,22 +3,53 @@
 
 <!-- display names of users -->
 <% users = User.all %>
+<% profiles = Profile.all %>
+
 <ul> 
-<% users.each do |user| %>
-<li><%= "#{user.fname}, #{user.lname}, #{user.username}"  %></li>
-<% end %> 
+	<% users.each do |user| %>
+		<div class="row">
+			<div class="col-md-1">
+				<% if user.profile %>
+					<% if user.profile.post_picture_path && user.profile.post_picture_path != "" %>
+						<img src='<%= "#{user.profile.post_picture_path}" %>' width="25px">
+					<% end %>
+				<% end %>
+			</div>
+			<div class="col-md-2">
+				<li class="profile-li"><%= "#{user.fname}, #{user.lname}, #{user.username}" %></li>
+			</div>
+			<div class="col-md-9">
+				<% if current_user %>
+					<% if current_user.id != user.id %>
+						<!-- if not following, put a follow link else put an unfollow link-->
+						<% following = Follow.where(follower_id: current_user.id, followee_id: user.id) %>
+						<% if following.length == 0 %>
+							<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{user.id}"%> >Follow this Blog!</a> </p>
+						<% else %>
+							<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{user.id}"%> >Unfollow!</a> </p>
+						<% end %>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<hr>
+	<% end %> 
+	<% profiles.each do |profile| %>
+		<li class="profile-li"><%= "#{profile.user_id}"%></li>
+		<% if profile.user %>
+			<%= "#{profile.user.username}: #{profile.country}, #{profile.picture_path}, #{profile.post_picture_path}"  %>
+		<% end %>		
+	<% end %> 
 </ul>
 
+<!-- 
 <img src="./images/jerry.jpg" width="50px">
 <img src="./images/T.jpg" width="50px">
 <img src="./images/tweetie.jpg" width="50px">
 <img src="./images/sylvester.jpg" width="50px"> 
-<img src="./images/Taz.jpg" width="200px"> 
-
-
-<!-- we need to get the images next to the users. linking together  -->
-
+<img src="./images/Taz.jpg" width="50px"> 
+ -->
 
 <p><a href="/users"> Back to users</a>
-<a href="/edit">Edit Your Profile</a>
+
 </p>

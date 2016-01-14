@@ -2,23 +2,48 @@
 
 <!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
 <% if current_user %>
-	<% if @show_user.id != current_user.id %>
-		<% if @following.length == 0 %>
-			<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+	<div class="row">
+		<% if @show_user.id != current_user.id %>
+			<% if @following.length == 0 %>
+				<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+			<% else %>
+				<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+			<% end %>
 		<% else %>
-			<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+			<!-- If we are here, current user is looking at their own page. -->
+			<!-- So create a 'New Post' btn -->
+			<div class="col-md-6">
+				<p><a class="btn btn-default" href="/blogpost_new">New Post</a> </p>	
+			</div>
+			<div class="col-md-6">
+				<% following = Follow.where(follower_id: @show_user.id) %>
+				<% if following.length > 0 %>
+					<h2>Currently Following</h2>
+					<ul>
+						<% following.each do |follows| %>
+							<% user = User.find(follows.followee_id) %>
+							<div class="row">
+								<div class="col-md-1">
+									<a href='<%"/show?p=#{user.id}"%>'><%= user.username %></a>
+								</div>
+								<div class="col-md-11">
+									<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{user.id}"%> >Unfollow!</a>
+								</div>
+							</div>
+						<% end %>
+					</ul>
+				<% end %>
+			</div>
+			<hr>
 		<% end %>
-	<% else %>
-		<!-- If we are here, current user is looking at their own page. -->
-		<!-- So create a 'New Post' btn -->
-		<p><a class="btn btn-default" href="/blogpost_new">New Post</a> </p>	
-		<hr>
-	<% end %>
+	</div>
 <% end %>
 
 <!-- display blogger's posts -->
 <% @posts.each do |post| %>
 	<h1> <a href=<%="/blogpost_show?p=#{post.id}"%>> <%= post.title %></a></h1>
+		<% post_user = User.find post.user_id %>
+		<p>posted by <%= "#{post_user.username} on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
 	<p> <%= post.body %> </p>
 	<% if current_user %>
 		<% if @show_user.id == current_user.id %>
