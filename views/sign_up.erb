@@ -1,28 +1,22 @@
 <h1> Become a Member with BleatHowl</h1>
 
 <form method="POST" action="/sign-up">
-	<p>  
+	<div class="row">
 		<label for="username">Username</label> 
-		<input type="text" name="username">  
+		<input class="form-control" type="text" name="username">  
 		<label for="password">Password</label> 
-		<input type="text" name="password">
-	</p>
-	<p>  
+		<input class="form-control" type="text" name="password">
+	</div>
+	<div class="row"> 
 		<label for="fname">First Name</label> 
-		<input type="text" name="fname">
+		<input class="form-control" type="text" name="fname">
 		<label for="lname">Last Name</label> 
-		<input type="text" name="lname">
+		<input class="form-control" type="text" name="lname">
 		<label for="country">Country</label> 
-		<input type="text" name="country">
-	</p>
-	<p>
-		<label for="picture_path">Picture_path</label> 
-		<input type="text" name="picture_path">
-		<label for="post_picture_path">Post_picture_path</label> 
-		<input type="text" name="post_picture_path">
-	</p>
-	<hr>          
-	<input type="Submit">
+		<input class="form-control" type="text" name="country">
+		<hr> 
+	</div>         
+	<input class="btn btn-lg btn-primary btn-block" type="Submit">
 </form>
-
+<hr>
 <a href="/sign_in"></a>

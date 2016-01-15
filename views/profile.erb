@@ -8,13 +8,6 @@
 <ul> 
 	<% users.each do |user| %>
 		<div class="row">
-			<div class="col-md-1">
-				<% if user.profile %>
-					<% if user.profile.post_picture_path && user.profile.post_picture_path != "" %>
-						<img src='<%= "#{user.profile.post_picture_path}" %>' width="25px">
-					<% end %>
-				<% end %>
-			</div>
 			<div class="col-md-2">
 				<li class="profile-li"><%= "#{user.fname}, #{user.lname}, #{user.username}" %></li>
 			</div>
@@ -37,18 +30,10 @@
 	<% profiles.each do |profile| %>
 		<li class="profile-li"><%= "#{profile.user_id}"%></li>
 		<% if profile.user %>
-			<%= "#{profile.user.username}: #{profile.country}, #{profile.picture_path}, #{profile.post_picture_path}"  %>
+			<%= "#{profile.user.username}: #{profile.user.fname} #{profile.user.lname}, #{profile.country}" %>
 		<% end %>		
 	<% end %> 
 </ul>
-
-<!-- 
-<img src="./images/jerry.jpg" width="50px">
-<img src="./images/T.jpg" width="50px">
-<img src="./images/tweetie.jpg" width="50px">
-<img src="./images/sylvester.jpg" width="50px"> 
-<img src="./images/Taz.jpg" width="50px"> 
- -->
 
 <p><a href="/users"> Back to users</a>
 
