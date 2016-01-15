@@ -25,7 +25,12 @@ end
 
 # views 
 get '/' do 
-	@posts = Post.all 
+	@posts = Post.first(10) 
+
+	user = User.find 7
+	if user
+		user.destroy
+	end
 
 	erb :home 
 end 
@@ -73,11 +78,7 @@ post '/sign-up' do
 		password = Password.create(user_id:user.id, 
 											password:params[:password])
 		if password
-			profile = Profile.create(
-				country:params[:country],
-				picture_path:params[:picture_path],
-				post_picture_path:params[:post_picture_path]
-			) 
+			profile = Profile.create(country:params[:country])
 			if profile
 				redirect '/sign-in'
 			else
@@ -102,6 +103,43 @@ get '/users' do
 	erb :users
 end 
 
+get '/user_delete' do
+	erb :user_delete
+end
+
+post '/user_delete' do
+	# delete any follower-records where I follow
+	records = Follow.where(follower_id: current_user.id)
+	records.each do |record|
+		record.destroy
+	end
+
+	# delete any follower-records where I'm followed
+	records = Follow.where(followee_id: current_user.id)
+	records.each do |record|
+		record.destroy
+	end
+
+	# delete all my posts
+	records = Post.where(user_id: current_user.id)
+	records.each do |record|
+		record.destroy
+	end
+
+	# delete my profile
+	records = Profile.where(user_id: current_user.id)
+	records.each do |record|
+		record.destroy
+	end
+
+	# delete me as a user
+	records = User.where(id: current_user.id)
+	records.each do |record|
+		record.destroy
+	end
+
+	redirect '/sign-out'
+end
 #
 #  Display a specific user's posts
 #
@@ -126,19 +164,7 @@ get '/show' do
 
 	# get all posts from show_user and followees
 	#
-	all_posts = Post.where(:user_id => post_users)
-
-	# limit the number of show_user's displayed to ten
-	i = 0
-	j = 0
-	@posts = []
-	while i < 10 && j < all_posts.length do
-	   @posts << all_posts[i]
-		if all_posts[i].user_id == @show_user.id
-		   i += 1 
-		end
-	   j += 1
-	end
+	@posts = Post.where(:user_id => post_users)
 
 	erb :show
 end
@@ -223,14 +249,6 @@ post '/blogpost_new' do
 	end
 end 
 
-get '/feed' do
-	erb :feed 
-end 
-
-get '/followers' do 
-	erb :followers 
-end 
-
 get '/sign-out' do 
 	session[:user_id] = nil
 	current_user
@@ -238,18 +256,8 @@ get '/sign-out' do
 	redirect '/'
 end 
 #
-#  show and edit profiles
+#  edit profiles
 #
-get '/profile' do 
-	@profile = nil
-	if current_user
-		if current_user.profile
-			@profile = current_user.profile
-		end
-	end
-
-	erb :profile 
-end 
 
 get '/profile_edit' do
 	@profile = nil
@@ -257,18 +265,10 @@ get '/profile_edit' do
 		if current_user.profile
 			@profile = current_user.profile
 		else
-			@profile = Profile.new(
-				user_id: current_user.id,
-				picture_path: './images/user.png',
-				post_picture_path: './images/user.png'			
-			)
+			@profile = Profile.new(user_id: current_user.id)
 		end
 	else
-		@profile = Profile.new(
-			user_id: current_user.id,
-			picture_path: './images/user.png',
-			post_picture_path: './images/user.png'			
-		)
+		@profile = Profile.new(user_id: current_user.id)
 	end
 
 	erb :profile_edit
@@ -277,11 +277,7 @@ end
 post '/profile_edit' do
 	profile = Profile.where(:user_id => current_user.id)
 	if profile.length > 0
-		if profile[0].update_attributes(
-				country: params[:country],
-				picture_path: params[:picture_path],
-				post_picture_path: params[:post_picture_path]
-			)
+		if profile[0].update_attributes(country: params[:country])
 			flash[:notice] = "Profile updated."	
 			redirect '/profile'
 		else
@@ -289,11 +285,9 @@ post '/profile_edit' do
 			redirect '/profile_edit'
 		end
 	else
-		profile.new(
+		profile.create(
 			user_id: current_user.id,
-			country: params[:country],
-			picture_path: params[:picture_path],
-			post_picture_path: params[:post_picture_path]
+			country: params[:country]
 		)
 	end
 	erb :profile

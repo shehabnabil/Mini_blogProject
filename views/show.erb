@@ -1,10 +1,18 @@
-<h1> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h1>
-
+	<div class="row">
+				<div class="col-md-6">
+<h1> <%= "#{@show_user.username}" %> </h1>
+<h2> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h2>
+<h3> <%= "#{@show_user.profile.country}" %> </h3>
+</div>
+				<div class="col-md-6">
+				<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
+</div>
+</div>
 <!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
 <% if current_user %>
 	<div class="row">
 		<% if @show_user.id != current_user.id %>
-			<% if @following.length == 0 %>
+			<% if Follow.where(follower_id: current_user.id, followee_id: @show_user.id).length == 0 %>
 				<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
 			<% else %>
 				<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
@@ -13,7 +21,7 @@
 			<!-- If we are here, current user is looking at their own page. -->
 			<!-- So create a 'New Post' btn -->
 			<div class="col-md-6">
-				<p><a class="btn btn-default" href="/blogpost_new">New Post</a> </p>	
+				<p><a class="btn btn-default" href="/blogpost_new">New Post</a></p>
 			</div>
 			<div class="col-md-6">
 				<% following = Follow.where(follower_id: @show_user.id) %>
@@ -24,10 +32,10 @@
 							<% user = User.find(follows.followee_id) %>
 							<div class="row">
 								<div class="col-md-1">
-									<a href='<%"/show?p=#{user.id}"%>'><%= user.username %></a>
+									<li><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}" %></a></li>
 								</div>
 								<div class="col-md-11">
-									<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{user.id}"%> >Unfollow!</a>
+									<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{follows.followee_id}"%> >Unfollow!</a>
 								</div>
 							</div>
 						<% end %>

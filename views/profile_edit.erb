@@ -5,51 +5,34 @@
 
 <form method="POST" action="/profile_edit">
 	<div class="row">
-	<p>  
-		<label for="username">Username</label> 
-		<input type="text" name="username" value='<%= "#{current_user.username}"%>' >  
-		<label for="password">Change Password</label> 
-		<input type="text" name="password">
-	</p>
+		<div = class="col-md-6">  
+			<label for="username">Username</label> 
+			<input class="form-control" type="text" name="username" value='<%= "#{current_user.username}"%>' >
+		</div>
+		<div = class="col-md-6">  
+			<label for="password">Change Password</label> 
+			<input class="form-control" type="text" name="password">
+		</div>
 	</div>
 	<div class="row">
-	<p>  
-		<label for="fname">First Name</label> 
-		<input type="text" name="fname" value='<%= "#{current_user.fname}"%>'>
-		<label for="lname">Last Name</label> 
-		<input type="text" name="lname" value='<%= "#{current_user.lname}"%>'>
-		<label for="country">Country</label> 
-		<input type="text" name="country" value='<%= "#{@profile.country}"%>'>
-	</p>
-	</div>
-	<div class="row">
-	<p>
-		<label for="picture_path">User Picture</label> 
-		<input type="text" name="picture_path" value='<%= "#{@profile.picture_path}"%>'>
-		<label for="post_picture_path">User Avatar</label> 
-		<input type="text" name="post_picture_path" value='<%= "#{@profile.post_picture_path}"%>'>
-	</p>
+		<div = class="col-md-4">  
+			<label for="fname">First Name</label> 
+			<input class="form-control" type="text" name="fname" value='<%= "#{current_user.fname}"%>'>
+		</div>
+		<div = class="col-md-4">  
+			<label for="lname">Last Name</label> 
+			<input class="form-control" type="text" name="lname" value='<%= "#{current_user.lname}"%>'>
+		</div>
+		<div = class="col-md-4">  
+			<label for="country">Country</label> 
+			<input class="form-control" type="text" name="country" value='<%= "#{@profile.country}"%>'>
+		</div>
 	</div>
 	<hr>          
 	<input type="Submit">
 </form>
 <hr>
 		
-		<% users = User.all %>
-<ul> 
-		<% users.each do |user| %>
-	<li><%= "#{user.fname}, #{user.lname}, #{user.username}"  %></li>
-		<% end %> 
-		<a href='/log_out'>Log_out </a>
-</ul>
-
-
-<img src="./images/jerry.jpg" width="50px">
-<img src="./images/T.jpg" width="50px">
-<img src="./images/tweetie.jpg" width="50px">
-<img src="./images/sylvester.jpg" width="50px"> 
-<img src="./images/Taz.jpg" width="200px"> 
-
 
 
 
