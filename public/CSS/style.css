@@ -1,5 +1,6 @@
 body {
 	padding-top: 140px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 
 	background-image: url('/images/wool.jpg');
 	background-position: center center;
@@ -25,22 +26,20 @@ body {
 	font-size: 14pt;
 	margin-top: 40px;
 }
-.navbar > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    background-color: #FFFF00;
-    /*color: #FFC0CB;*/
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    background-color: white;
     color: black;
 }
-/*.navbar .nav > li > a {*/
-.nav > li > a {
+.navbar .nav > li > a {
+/*.nav > li > a {*/
 	color: white;
 	font-size: 14pt;
 	margin-top: 40px;
 
-    line-height: 19px;
+	line-height: 19px;
+	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
  /*   padding: 9px 10px 11px;
-    text-decoration: none;*/
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
-    /*color:  #ddd;*/
+ text-decoration: none;*/
 }
 .wolfbg {
 	background-image: url('/images/wolf.jpg');
@@ -56,9 +55,15 @@ body {
 	background-attachment: fixed;
 	background-size: cover;	
 }
-
-
-
+.boxed {
+	border: solid black 3px;
+}
+.blogpost {
+	font-size: 14pt;	
+}
+.bigLogo {
+	position: fixed;
+}
 
 
 .flash {

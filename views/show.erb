@@ -1,5 +1,6 @@
+
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 boxed">
 			<h1> <%= "#{@show_user.username}" %> </h1>
 			<h2> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h2>
 			<h3> <%= "#{@show_user.profile.country}" %> </h3>
@@ -11,7 +12,7 @@
 				<% end %>
 			<% end %>
 		</div>
-</div>
+	</div>
 <!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
 <% if current_user %>
 	<div class="row">
