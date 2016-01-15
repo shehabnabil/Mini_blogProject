@@ -5,9 +5,10 @@
 			<h3> <%= "#{@show_user.profile.country}" %> </h3>
 		</div>
 		<div class="col-md-6">
-			<% if @show_user.id == current_user.id %>
-
-				<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
+			<% if current_user %>			
+				<% if @show_user.id == current_user.id %>
+					<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
+				<% end %>
 			<% end %>
 		</div>
 </div>
