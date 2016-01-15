@@ -27,11 +27,6 @@ end
 get '/' do 
 	@posts = Post.first(10) 
 
-	user = User.find 7
-	if user
-		user.destroy
-	end
-
 	erb :home 
 end 
 

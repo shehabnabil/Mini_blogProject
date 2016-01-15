@@ -3,8 +3,8 @@
 <hr>
 <% @posts.each do |post| %>
 	<p>
-		<a href='/blogpost'><%="#{post.title}"%> </a> 
-		<p>posted by <a href="/profile"><%="#{post.user.username}"%></a><%= " on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
+		<a href=<%="/blogpost_show?p=#{post.id}"%>><%="#{post.title}"%> </a> 
+		<p>posted by <a href=<%="/show?u=#{post.user_id}"%>><%="#{post.user.username}"%></a><%= " on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
 	</p><p>
 		<%= post.body %>
 	</p>

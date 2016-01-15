@@ -1,12 +1,15 @@
 	<div class="row">
-				<div class="col-md-6">
-<h1> <%= "#{@show_user.username}" %> </h1>
-<h2> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h2>
-<h3> <%= "#{@show_user.profile.country}" %> </h3>
-</div>
-				<div class="col-md-6">
+		<div class="col-md-6">
+			<h1> <%= "#{@show_user.username}" %> </h1>
+			<h2> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h2>
+			<h3> <%= "#{@show_user.profile.country}" %> </h3>
+		</div>
+		<div class="col-md-6">
+			<% if @show_user.id == current_user.id %>
+
 				<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
-</div>
+			<% end %>
+		</div>
 </div>
 <!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
 <% if current_user %>
