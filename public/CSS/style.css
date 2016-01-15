@@ -1,13 +1,15 @@
 body {
-	background-color: #99CCFF;
-	color: #006600;
+	padding-top: 140px;
+
+	background-image: url('/images/wool.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;	
 }
-head{
-	background-color: black;
-	color:black;
-}
-.navbar-height-override {
+.navbar-bleathowl-custom {
 	height: 135px;
+	border-bottom: solid black 3px;
 }
 .profile-li {
 	list-style-type: none;
@@ -18,7 +20,42 @@ head{
 .profile-li a:hover {
 	color: white;
 }
+.navbar-font {
+	color: white;
+	font-size: 14pt;
+	margin-top: 40px;
+}
+.navbar > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #FFFF00;
+    /*color: #FFC0CB;*/
+    color: black;
+}
+/*.navbar .nav > li > a {*/
+.nav > li > a {
+	color: white;
+	font-size: 14pt;
+	margin-top: 40px;
 
+    line-height: 19px;
+ /*   padding: 9px 10px 11px;
+    text-decoration: none;*/
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+    /*color:  #ddd;*/
+}
+.wolfbg {
+	background-image: url('/images/wolf.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;	
+}
+.woolbg {
+	background-image: url('/images/wool.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;	
+}
 
 
 

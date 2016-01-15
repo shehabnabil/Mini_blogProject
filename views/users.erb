@@ -4,7 +4,7 @@
 	<% @users.each do |user| %>
 		<div class="row">
 			<div class="col-md-3">
-				<li class="profile-li"><%= "#{user.username}: #{user.fname} #{user.lname}" %></li>
+				<li class="profile-li"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}: #{user.fname} #{user.lname}" %></a></li>
 			</div>
 			<div class="col-md-9">
 				<% if current_user %>

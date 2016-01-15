@@ -27,6 +27,13 @@ end
 get '/' do 
 	@posts = Post.first(10) 
 
+	profiles = Profile.all
+	profiles.each do |profile|
+		if profile.user_id == nil
+			profile.destroy
+		end
+	end
+
 	erb :home 
 end 
 
@@ -73,8 +80,11 @@ post '/sign-up' do
 		password = Password.create(user_id:user.id, 
 											password:params[:password])
 		if password
-			profile = Profile.create(country:params[:country])
+			profile = Profile.create(
+				user_id: user.id,
+				country:params[:country])
 			if profile
+				flash[:notice] = "Account Created. Sign in - your blog awaits!"
 				redirect '/sign-in'
 			else
 				flash[:notice] = "Profile creation failed. Please fill in your profile information."
@@ -274,7 +284,7 @@ post '/profile_edit' do
 	if profile.length > 0
 		if profile[0].update_attributes(country: params[:country])
 			flash[:notice] = "Profile updated."	
-			redirect '/profile'
+			redirect "/show?u=#{current_user.id}"
 		else
 			flash[:notice] = "Profile update failed. Please try again"	
 			redirect '/profile_edit'
@@ -285,7 +295,7 @@ post '/profile_edit' do
 			country: params[:country]
 		)
 	end
-	erb :profile
+	redirect "/show?u=#{current_user.id}"
 end
 
 
