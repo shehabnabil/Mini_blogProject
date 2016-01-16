@@ -3,6 +3,7 @@
 		<h1> <%= "#{@show_user.username} - #{@show_user.fname} #{@show_user.lname} - #{@show_user.profile.country}" %> </h1>
 		<% if current_user %>			
 			<% if @show_user.id == current_user.id %>
+				<hr>
 				<!-- If we are here, current user is looking at their own page. -->
 				<!-- create a 'New Post' and delete your blog btn -->
 				<div class="row">
@@ -13,7 +14,6 @@
 						<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
 					</div>
 				</div>
-								<hr>
 			<% end %>
 		<% end %>
 	</div>
@@ -74,7 +74,7 @@
 			<div class="col-md-8">
 				<h1 class="headerLink"> <a href=<%="/blogpost_show?p=#{post.id}"%>> <%= post.title %></a></h1>
 				<% post_user = User.find post.user_id %>
-				<p>posted by <%= "#{post_user.username} on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
+				<p>posted by <%= "#{post_user.username} on #{post.date_posted.strftime("%m/%d/%Y %H:%M")}" %> </p>
 			</div>
 			<div class="col-md-4">
 				<% if current_user %>

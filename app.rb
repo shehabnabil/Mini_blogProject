@@ -25,14 +25,7 @@ end
 
 # views 
 get '/' do 
-	@posts = Post.first(10) 
-
-	profiles = Profile.all
-	profiles.each do |profile|
-		if profile.user_id == nil
-			profile.destroy
-		end
-	end
+	@posts = Post.first(10).reverse 
 
 	erb :home 
 end 
@@ -161,7 +154,6 @@ get '/show' do
 		if @following.length > 0
 			# add followed posts to the list of posts to show
 			@following.each do |follows|
-				# unsorted_posts.append Post.where(user_id: follows.followee_id)
 				post_users << follows.followee_id
 			end
 		end
@@ -169,7 +161,7 @@ get '/show' do
 
 	# get all posts from show_user and followees
 	#
-	@posts = Post.where(:user_id => post_users)
+	@posts = Post.where(:user_id => post_users).reverse
 
 	erb :show
 end
