@@ -1,6 +1,7 @@
 body {
 	padding-top: 140px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	color: black;
 
 	background-image: url('/images/wool.jpg');
 	background-position: center center;
@@ -16,9 +17,15 @@ body {
 	list-style-type: none;
 }
 .profile-li a {
-	color: gray;
+	color: black;
 }
 .profile-li a:hover {
+	color: white;
+}
+.headerLink a {
+	color: #383838;
+}
+.headerLink a:hover {
 	color: white;
 }
 .navbar-font {
@@ -55,22 +62,38 @@ body {
 	background-attachment: fixed;
 	background-size: cover;	
 }
+.container-fluid {
+	margin-left: 20px;
+}
 .boxed {
 	border: solid black 3px;
+	padding: 10px;
+/*	margin: 5px;*/
 }
 .blogpost {
 	font-size: 14pt;	
 }
+.byline {
+	font-size: 10pt;	
+}
 .bigLogo {
 	position: fixed;
 }
-
-
+.bpub {
+	margin-top: 22px;
+}
 .flash {
 	color: red;
 	margin: auto;
 	width: 400px;
 }
+.bottom-margin {
+	margin-bottom: 40px;
+}
+
+
+
+
 
 #header {
 	margin: auto;

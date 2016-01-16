@@ -57,21 +57,37 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 
-		<div class="container woolbg">
-			<%if @error then %>
-				<div class="alert alert-error"><%=@error%></div>
-			<% end %>
+		<div class="container-fluid woolbg">
+			<div class="row">
+				<div class="col-md-6">
 
-			<div class="flash">
-				<%= flash[:notice] if flash[:notice] %> 
-				<%= flash[:alert] if flash[:alert] %>
+					<%if @error then %>
+						<div class="alert alert-error"><%=@error%></div>
+					<% end %>
+
+					<div class="flash blogpost">
+						<%= flash[:notice] if flash[:notice] %> 
+						<%= flash[:alert] if flash[:alert] %>
+					</div>
+
+					<%= yield %>
+
+					<hr>			
+					<a class="btn btn-default bottom-margin" href="/">Home</a>
+				</div>
+				<div class="col-md-6">		
+					<div id="mycarousel" class="carousel slide bigLogo" data-ride="carousel">
+					    <div class="carousel-inner">
+					        <div class="item active">
+					        <img src="/images/bleathowlLogo.jpg" alt="" class="img-responsive">
+					           <div class="carousel-caption">
+						           Why Twitter When You Can BleatHowl?
+					           </div>
+					        </div>
+					    </div>
+					</div>
+				</div>
 			</div>
-
-			<%= yield %>
-
-			<p>		
-				<a href="/">Home</a>
-			</p>
 		</div>
 
 	</body>
