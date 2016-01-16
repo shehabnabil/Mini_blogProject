@@ -1,69 +1,92 @@
 
 	<div class="row">
-		<div class="col-md-6 boxed">
-			<h1> <%= "#{@show_user.username}" %> </h1>
-			<h2> <%= "#{@show_user.fname} #{@show_user.lname}" %> </h2>
-			<h3> <%= "#{@show_user.profile.country}" %> </h3>
-		</div>
-		<div class="col-md-6">
-			<% if current_user %>			
-				<% if @show_user.id == current_user.id %>
-					<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
-				<% end %>
+		<h1> <%= "#{@show_user.username} - #{@show_user.fname} #{@show_user.lname} - #{@show_user.profile.country}" %> </h1>
+		<% if current_user %>			
+			<% if @show_user.id == current_user.id %>
+				<!-- If we are here, current user is looking at their own page. -->
+				<!-- create a 'New Post' and delete your blog btn -->
+				<div class="row">
+					<div class="col-md-6">
+						<p><a class="btn btn-default" href="/blogpost_new">New Post</a></p>
+					</div>
+					<div class="col-md-6">
+						<p><a class="btn btn-default" href="/user_delete">Cancel and Delete Your BleatHowl Blog</a></p>
+					</div>
+				</div>
+								<hr>
 			<% end %>
-		</div>
+		<% end %>
 	</div>
-<!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
-<% if current_user %>
-	<div class="row">
-		<% if @show_user.id != current_user.id %>
-			<% if Follow.where(follower_id: current_user.id, followee_id: @show_user.id).length == 0 %>
-				<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+	<!-- determine if we show nothing, a 'follow' btn, or an 'unfollow' btn -->
+	<% if current_user %>
+		<div class="row">
+			<% if @show_user.id != current_user.id %>
+				<% if Follow.where(follower_id: current_user.id, followee_id: @show_user.id).length == 0 %>
+					<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Follow this Blog!</a> </p>
+				<% else %>
+					<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
+				<% end %>
 			<% else %>
-				<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{@show_user.id}"%> >Unfollow!</a> </p>
-			<% end %>
-		<% else %>
-			<!-- If we are here, current user is looking at their own page. -->
-			<!-- So create a 'New Post' btn -->
-			<div class="col-md-6">
-				<p><a class="btn btn-default" href="/blogpost_new">New Post</a></p>
-			</div>
-			<div class="col-md-6">
 				<% following = Follow.where(follower_id: @show_user.id) %>
 				<% if following.length > 0 %>
 					<h2>Currently Following</h2>
 					<ul>
-						<% following.each do |follows| %>
-							<% user = User.find(follows.followee_id) %>
+						<div class="col-md-6">
 							<div class="row">
-								<div class="col-md-1">
-									<li><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}" %></a></li>
-								</div>
-								<div class="col-md-11">
-									<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{follows.followee_id}"%> >Unfollow!</a>
-								</div>
+								<% following.each_with_index do |follows,index| %>
+									<% user = User.find(follows.followee_id) %>
+									<% if index % 2 == 0 %>
+										<div class="col-md-6">
+											<li class="profile-li blogpost"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}" %></a></li>
+										</div>
+										<div class="col-md-6">
+											<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{follows.followee_id}"%> >Unfollow!</a>
+										</div>
+									<% end %>
+								<% end %>
 							</div>
-						<% end %>
+						</div>
+						<div class="col-md-6">
+							<div class="row">
+								<% following.each_with_index do |follows,index| %>
+									<% user = User.find(follows.followee_id) %>
+									<% if index % 2 > 0 %>
+										<div class="col-md-6">
+											<li class="profile-li blogpost"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}" %></a></li>
+										</div>
+										<div class="col-md-6">
+											<a class="btn btn-default" href=<%="/show_unfollow?er=#{follows.follower_id}&ee=#{follows.followee_id}"%> >Unfollow!</a>
+										</div>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
 					</ul>
 				<% end %>
-			</div>
-			<hr>
-		<% end %>
-	</div>
-<% end %>
+			<% end %>
+		</div>
+	<% end %>
 
-<!-- display blogger's posts -->
-<% @posts.each do |post| %>
-	<h1> <a href=<%="/blogpost_show?p=#{post.id}"%>> <%= post.title %></a></h1>
-		<% post_user = User.find post.user_id %>
-		<p>posted by <%= "#{post_user.username} on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
-	<p> <%= post.body %> </p>
-	<% if current_user %>
-		<% if @show_user.id == current_user.id %>
-			<!-- If we are here, current user is looking at their own page. -->
-			<!-- So allow them to edit their post -->
-			<p><a class="btn btn-default" href=<%="/blogpost_edit?p=#{post.id}"%>>Edit Post</a> </p>				
-		<% end %>
-	<% end %>	
-	<hr>
-<% end %>
+	<!-- display blogger's posts -->
+	<% @posts.each do |post| %>
+		<div class="row">
+			<hr>
+			<div class="col-md-8">
+				<h1 class="headerLink"> <a href=<%="/blogpost_show?p=#{post.id}"%>> <%= post.title %></a></h1>
+				<% post_user = User.find post.user_id %>
+				<p>posted by <%= "#{post_user.username} on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
+			</div>
+			<div class="col-md-4">
+				<% if current_user %>
+					<% if @show_user.id == current_user.id %>
+						<!-- If we are here, current user is looking at their own page. -->
+						<!-- So allow them to edit their post -->
+						<p><a class="btn btn-default bpub" href=<%="/blogpost_edit?p=#{post.id}"%>>Edit Post</a> </p>
+					<% end %>
+				<% end %>
+			</div>
+		</div>	
+		<div class="row">
+			<p class="blogpost"> <%= post.body %> </p>
+		</div>	
+	<% end %>

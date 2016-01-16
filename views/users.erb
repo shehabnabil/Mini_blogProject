@@ -1,25 +1,28 @@
 <h1>BleatHowl Users </h1>
 
-<ul> 
-	<% @users.each do |user| %>
-		<div class="row">
-			<div class="col-md-3">
-				<li class="profile-li"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}: #{user.fname} #{user.lname}" %></a></li>
-			</div>
-			<div class="col-md-9">
-				<% if current_user %>
-					<% if current_user.id != user.id %>
-						<!-- if not following, put a follow link else put an unfollow link-->
-						<% following = Follow.where(follower_id: current_user.id, followee_id: user.id) %>
-						<% if following.length == 0 %>
-							<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{user.id}"%> >Follow this Blog!</a> </p>
-						<% else %>
-							<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{user.id}"%> >Unfollow!</a> </p>
+		<ul> 
+			<% @users.each do |user| %>
+				<div class="row">
+					<div class="col-md-7">
+						<li class="profile-li blogpost"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}:" %></a></li>
+						<li class="profile-li blogpost"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.fname} #{user.lname}" %></a></li>
+					</div>
+					<div class="col-md-5">
+						<% if current_user %>
+							<% if current_user.id != user.id %>
+								<!-- if not following, put a follow link else put an unfollow link-->
+								<% following = Follow.where(follower_id: current_user.id, followee_id: user.id) %>
+								<% if following.length == 0 %>
+									<p><a class="btn btn-default" href=<%="/show_follow?er=#{current_user.id}&ee=#{user.id}"%> >Follow this Blog!</a> </p>
+								<% else %>
+									<p><a class="btn btn-default" href=<%="/show_unfollow?er=#{current_user.id}&ee=#{user.id}"%> >Unfollow!</a> </p>
+								<% end %>
+							<% end %>
 						<% end %>
-					<% end %>
-				<% end %>
-			</div>
-		</div>
-		<hr>
-	<% end %> 
-</ul>
+					</div>
+				</div>
+				<hr>
+			<% end %> 
+		</ul>
+
+

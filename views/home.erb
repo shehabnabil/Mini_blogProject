@@ -1,36 +1,18 @@
-<div class="row">
-	<div class="col-md-6">
+
 		<div class="row">
 				<h1>BleatHowl</h1>
 				<h3>Two Things To Do At The Moon</h3>
 		</div>
-		<hr>
+
 		<div class="row">
 
-				<% @posts.each do |post| %>
-					<h2><a href=<%="/blogpost_show?p=#{post.id}"%>><%="#{post.title}"%> </a> </h2>
-					<p>posted by <a href=<%="/show?u=#{post.user_id}"%>><%="#{post.user.username}"%></a><%= " on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
-					<p class="blogpost">
-						<%= post.body %>
-					</p>
-					<hr>
-				<% end %>
+			<% @posts.each do |post| %>
+				<hr>
+				<h2 class="headerLink"><a href=<%="/blogpost_show?p=#{post.id}"%>><%="#{post.title}"%> </a> </h2>
+				<p>posted by <a href=<%="/show?u=#{post.user_id}"%>><%="#{post.user.username}"%></a><%= " on #{post.date_posted.strftime("%d/%m/%Y %H:%M")}" %> </p>
+				<p class="blogpost">
+					<%= post.body %>
+				</p>
+			<% end %>
 
 		</div>
-	</div>
-	<div class="col-md-6">
-		
-<div id="mycarousel" class="carousel slide bigLogo" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="item active">
-        <img src="/images/bleathowlLogo.jpg" alt="" class="img-responsive">
-           <div class="carousel-caption">
-	           Why Twitter When You Can BleatHowl?
-           </div>
-        </div>
-    </div>
-	</div>
-
-</div>
-
-</div>
