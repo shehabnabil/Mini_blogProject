@@ -2,6 +2,7 @@
 
 		<ul> 
 			<% @users.each do |user| %>
+				<hr>
 				<div class="row">
 					<div class="col-md-7">
 						<li class="profile-li blogpost"><a href=<%="/show?u=#{user.id}"%>><%= "#{user.username}:" %></a></li>
@@ -21,7 +22,6 @@
 						<% end %>
 					</div>
 				</div>
-				<hr>
 			<% end %> 
 		</ul>
 

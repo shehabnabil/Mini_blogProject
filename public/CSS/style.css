@@ -90,9 +90,22 @@ body {
 .bottom-margin {
 	margin-bottom: 40px;
 }
-
-
-
+.titletxt {
+	/*color: #e65b00;*/
+	color: #ffa21a;
+	font-weight: bold;
+	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+}
+.titlesize {
+	font-size: 42pt;
+}
+.carousel-caption {
+    top: 95px;
+    bottom: auto;
+    color: black;
+    font-size: 16pt;
+    font-weight: bold;
+}
 
 
 #header {
